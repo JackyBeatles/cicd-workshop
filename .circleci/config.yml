@@ -12,4 +12,6 @@ jobs:
     steps:
     - run:
         name: Set Env
-        command: ls  -la
+        command: |
+            pwd  
+            ls -lta
