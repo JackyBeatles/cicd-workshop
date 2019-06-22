@@ -1,9 +1,15 @@
-version: 2.1
-
-orbs:
-    hello: circleci/hello-build@0.0.5
-
+version: 2
 workflows:
-    "Hello Workflow":
-        jobs:
-          - hello/hello-build
+  version: 2
+  build_test_ship_deploy:
+      jobs:
+        - build
+jobs:
+  build:
+    working_directory: ~/project
+    docker:
+    - image: php:7.2.14-apache
+    steps:
+    - run:
+        name: Set Env
+        command: ls  -la
