@@ -10,6 +10,7 @@ jobs:
     docker:
     - image: php:7.2.14-apache
     steps:
+    - checkout
     - run:
         name: Set Env
         command: |
