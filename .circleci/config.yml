@@ -16,3 +16,4 @@ jobs:
             pwd  
             ls -lta
             date
+            uptime
