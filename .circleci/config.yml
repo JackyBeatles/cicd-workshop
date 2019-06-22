@@ -7,14 +7,13 @@ workflows:
 jobs:
   build:
     working_directory: ~/project
-    docker:
-    - image: php:7.2.14-apache
+    machine: true
     steps:
-    - checkout
-    - run:
-        name: Set Env
-        command: |
-            pwd  
-            ls -lta
-            date
-            uptime
+        - checkout
+        - run:
+            name: Docker Build 
+            command: |
+                TAG=0.1.$CIRCLE_BUILD_NUM
+                docker build -t   beatale/app:$TAG .
+                docker login -u $DOCKER_USER -p $DOCKER_PASS
+                docker push beatale/app:$TAG
