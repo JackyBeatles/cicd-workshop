@@ -36,7 +36,7 @@ jobs:
         steps:
             - checkout
             - run:
-                name: Docker Build 
+                name: Test
                 command: |
                     echo "Test"
     deploy:
@@ -45,7 +45,7 @@ jobs:
         steps:
             - checkout
             - run:
-                name: Docker Build 
+                name: Deploy
                 command: |
                     echo "Deploy"
        
