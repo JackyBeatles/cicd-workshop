@@ -8,6 +8,7 @@ workflows:
             branches:
               only:
                 - dev
+jobs:
 #   gcp-create-vm:
 #       working_directory: ~/project
 #       docker:
@@ -31,9 +32,9 @@ workflows:
 #       - run:
 #           working_directory: ~/project
 #           name: Set project metadata
-#           command: gcloud compute project-info add-metadata --metadata latest_image_base="$IMAGE_BASE"
-    
-  build:
+          command: gcloud compute project-info add-metadata --metadata latest_image_base="$IMAGE_BASE"
+
+build:
     working_directory: ~/project
     machine: true
     steps:
