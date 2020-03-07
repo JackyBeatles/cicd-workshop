@@ -3,8 +3,11 @@ workflows:
   version: 2
   CICD_TEST:
       jobs:
-        - build
-jobs:
+      - build:
+          filters:  # using regex filters requires the entire branch to match
+            branches:
+              only:  # only branches matching the below regex filters will run
+                - dev
   gcp-create-vm:
       working_directory: ~/project
       docker:
