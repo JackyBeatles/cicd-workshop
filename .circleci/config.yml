@@ -3,33 +3,20 @@ workflows:
   version: 2
   CICD_TEST:
       jobs:
-        - build
+        - build:
+          filters:  # using regex filters requires the entire branch to match
+            branches:
+              only:  # only branches matching the below regex filters will run
+                - dev
+        - Unit_test:
+          filters:
+            branches:
+              only: stage
+        - Deploy:
+            filters:
+                branches:
+                only: master
 jobs:
-  gcp-create-vm:
-      working_directory: ~/project
-      docker:
-      - image: google/cloud-sdk
-      steps:
-      - run:
-          name: Authorize Google Cloud
-          command: | 
-              echo $GCLOUD_SERVICE_KEY | gcloud auth activate-service-account --key-file=-
-              gcloud --quiet config set project chrome-frame-227023
-              gcloud --quiet config set compute/zone asia-southeast1-b
-      - attach_workspace:
-          at: ~/project/pakcer-do
-      - run:
-          name: Set ENV
-          command: |
-            echo "export IMAGE_BASE=$(cat image_base.txt)" >> $BASH_ENV
-      - run:
-          name: Show image name
-          command: echo $IMAGE_BASE
-      - run:
-          working_directory: ~/project
-          name: Set project metadata
-          command: gcloud compute project-info add-metadata --metadata latest_image_base="$IMAGE_BASE"
-    
   build:
     working_directory: ~/project
     machine: true
@@ -42,5 +29,21 @@ jobs:
                 docker build -t   [changeme]/app:$TAG .
                 docker login -u $DOCKER_USER -p $DOCKER_PASS
                 docker push [changeme]/app:$TAG
-
-
+  Unit_test:
+    working_directory: ~/project
+    machine: true
+    steps:
+        - checkout
+        - run:
+            name: Unit_test
+            command: |
+                echo "Unit_test"
+  deploy:
+    working_directory: ~/project
+    machine: true
+    steps:
+        - checkout
+        - run:
+            name: deploy Production
+            command: |
+                echo "deploy Production"
