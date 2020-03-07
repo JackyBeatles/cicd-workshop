@@ -8,11 +8,13 @@ workflows:
             branches:
               only:
                 - dev
+                - staging
       - test:
           filters:
             branches:
               only:
                 - staging
+                - dev
       - deploy:
           filters:
             branches:
