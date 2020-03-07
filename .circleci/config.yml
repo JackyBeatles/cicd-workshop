@@ -1,12 +1,12 @@
-version: 2
+version: 2.1
 workflows:
   version: 2
-  CICD_TEST:
-      jobs:
+  CICD_DEMO:
+    jobs:
       - build:
-          filters:  # using regex filters requires the entire branch to match
+          filters:
             branches:
-              only:  # only branches matching the below regex filters will run
+              only:
                 - dev
   gcp-create-vm:
       working_directory: ~/project
