@@ -8,6 +8,16 @@ workflows:
             branches:
               only:
                 - dev
+      - test:
+          filters:
+            branches:
+              only:
+                - staging
+      - deploy:
+          filters:
+            branches:
+              only:
+                - master
 jobs:
     build:
         working_directory: ~/project
@@ -17,7 +27,24 @@ jobs:
             - run:
                 name: Docker Build 
                 command: |
-                    TAG=0.1.$CIRCLE_BUILD_NUM
-                    docker build -t   beatale/app:$TAG .
-                    docker login -u $DOCKER_USER -p $DOCKER_PASS
-                    docker push beatale/app:$TAG
+                    echo "Build"
+    test:
+        working_directory: ~/project
+        machine: true
+        steps:
+            - checkout
+            - run:
+                name: Docker Build 
+                command: |
+                    echo "Test"
+    deploy:
+        working_directory: ~/project
+        machine: true
+        steps:
+            - checkout
+            - run:
+                name: Docker Build 
+                command: |
+                    echo "Deploy"
+       
+       
