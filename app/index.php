@@ -1,3 +1,3 @@
 <?php
-    echo "Hello CICD";
+    echo "Hello Circleci";
 ?>
