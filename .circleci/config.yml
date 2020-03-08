@@ -1,52 +1,52 @@
-version: 2.1
-workflows:
-  version: 2
-  CICD_DEMO:
-    jobs:
-      - build:
-          filters:
-            branches:
-              only:
-                - dev
-                - staging
-      - test:
-          filters:
-            branches:
-              only:
-                - staging
-                - dev
-      - deploy:
-          filters:
-            branches:
-              only:
-                - master
+version: 2
 jobs:
-    build:
-        working_directory: ~/project
-        machine: true
-        steps:
-            - checkout
-            - run:
-                name: Docker Build 
-                command: |
-                    echo "Build"
-    test:
-        working_directory: ~/project
-        machine: true
-        steps:
-            - checkout
-            - run:
-                name: Docker Build 
-                command: |
-                    echo "Test"
-    deploy:
-        working_directory: ~/project
-        machine: true
-        steps:
-            - checkout
-            - run:
-                name: Docker Build 
-                command: |
-                    echo "Deploy"
-       
-       
+        unit_test:
+                docker:
+                - image: busybox:latest
+                steps:
+                - run:
+                        name: Unit Test
+                        command: echo "php to run Unit Test"
+        build_artifact:
+                docker:
+                - image: busybox:latest
+                steps:
+                - run:
+                        name: Build Docker 
+                        command: echo "build php to artifact"
+
+        deploy_to_dev:
+                docker:
+                - image: busybox:latest
+                steps:
+                - run:
+                        name: Deploy to Dev
+                        command: echo "php to deploy to dev"
+        deploy_to_prd:
+                docker:
+                - image: busybox:latest
+                steps:
+                - run:
+                        name: Deploy to Prod
+                        command: echo "php to deploy to Prod"
+                - run:
+                        name: Step no 2
+                        command: echo "Going to deploy to QA again"
+workflows:
+        version: 2
+        sample_pipeline:
+                jobs:
+                        - unit_test
+                        - build_artifact:
+                                requires:
+                                - unit_test
+                        - deploy_to_dev:
+                                requires:
+                                - build_artifact
+                        - hold_for_approval:
+                                type: approval
+                                requires:
+                                - deploy_to_dev
+                        - deploy_to_prd:
+                                requires:
+                                - hold_for_approval
