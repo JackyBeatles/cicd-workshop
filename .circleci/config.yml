@@ -44,7 +44,7 @@ workflows:
         sample_pipeline:
                 jobs:
                         - linting
-                        - unit_test                                
+                        - unit_test
                         - build_artifact:
                                 requires:
                                 - unit_test
@@ -52,6 +52,10 @@ workflows:
                         - deploy_to_dev:
                                 requires:
                                 - build_artifact
-                        - deploy_to_qa:
+                        - hold_for_approval:
+                                type: approval
                                 requires:
                                 - deploy_to_dev
+                        - deploy_to_qa:
+                                requires:
+                                - hold_for_approval
