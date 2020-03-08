@@ -6,14 +6,14 @@ jobs:
                 steps:
                 - run:
                         name: Unit Test
-                        command: echo "Going to run Unit Test"
+                        command: echo "php to run Unit Test"
         build_artifact:
                 docker:
                 - image: busybox:latest
                 steps:
                 - run:
-                        name: Build Artifact
-                        command: echo "Going to run the build artifact"
+                        name: Build Docker 
+                        command: echo "build php to artifact"
 
         deploy_to_dev:
                 docker:
@@ -21,14 +21,14 @@ jobs:
                 steps:
                 - run:
                         name: Deploy to Dev
-                        command: echo "Going to deploy to dev"
+                        command: echo "php to deploy to dev"
         deploy_to_prd:
                 docker:
                 - image: busybox:latest
                 steps:
                 - run:
                         name: Deploy to Prod
-                        command: echo "Going to deploy to Prod"
+                        command: echo "php to deploy to Prod"
                 - run:
                         name: Step no 2
                         command: echo "Going to deploy to QA again"
