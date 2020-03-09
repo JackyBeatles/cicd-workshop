@@ -1,3 +1,3 @@
 <?php
-    echo "Hello Circleci";
+    echo "TEST Circleci";
 ?>
